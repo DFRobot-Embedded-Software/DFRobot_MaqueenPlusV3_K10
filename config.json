@@ -1,0 +1,25 @@
+{
+	"name": {
+		"zh-cn": "DFRobot_MaqueenPlusV3_K10(示例)",
+		"en": "DFRobot_MaqueenPlusV3_K10"
+	},
+	"description": {
+		"zh-cn": "小体积显示屏，可用于智能穿戴设备的显示器。(用户库示例)",
+		"en": "DFRobot_MaqueenPlusV3_K10"
+	},
+	"author": "DFRobot",
+	"email": "MindPlus@dfrobot.com",
+	"license": "MIT",
+	"isBoard": false,
+	"id": "DFRobot_MaqueenPlusV3_K10",
+	"platform": ["win", "mac", "web"],
+	"version": "0.0.1",
+	"asset": {
+		"arduinoC": {
+			"dir": "arduinoC/",
+			"version": "0.0.1",
+			"board": [ "esp32"],
+			"main": "main.ts"
+		}
+	}
+}
