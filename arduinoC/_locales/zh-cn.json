@@ -1,12 +1,49 @@
 {
-    "oled12864.buttonPress|block": "当 [BUTTON] 按钮按下",
-    "oled12864.qrcode|block": "在坐标x [X] y [Y] 绘制二维码[STR] 尺寸 [SIZE]",
-    "oled12864.println|block": "在第 [LINE] 显示 [STR]",
-    "oled12864.print|block": "在坐标x [X] y [Y] 显示 [STR]",
-    "oled12864.setLineWidth|block": "设置线宽为 [WIDTH] 像素",
-    "oled12864.getLineWidth|block": "获取线宽",
-    "oled12864.buttonIsPressed|block": "按钮 [BUTTON] 被按下？",
-	"oled12864.notTrue|block": "非 [Flag]",
-    "oled12864.SIZE.1|menu": "29*29(1)",
-    "oled12864.SIZE.2|menu": "58*58(2)"
+    "DFRobot_MaqueenPlusV3_K10.DFRobot_MaqueenPlusV3_K10_init|block": "初始化 MaqueenPlus_V3_K10",
+    "DFRobot_MaqueenPlusV3_K10.getVersion|block": "读取版本号",
+    "DFRobot_MaqueenPlusV3_K10.setMotor|block": "设置 [DIRECTION] 电机 方向[CAR_DIRECTION] 速度 [SPEED]",
+    "DFRobot_MaqueenPlusV3_K10.setMotorStop|block": "设置 [DIRECTION] 电机 停止",
+    "DFRobot_MaqueenPlusV3_K10.setRgb|block": "设置[DIRECTION]RGB车灯  颜色[COLOR]",
+    "DFRobot_MaqueenPlusV3_K10.setRgbOff|block": "设置[DIRECTION]RGB车灯  关闭",
+    "DFRobot_MaqueenPlusV3_K10.servoMotorCtrl|block": "设置舵机 [SERVO_NUM] 角度为 [angle]",
+    "DFRobot_MaqueenPlusV3_K10.setCross|block": "设置前方 [CROSS]  [TURN_CMD]",
+    "DFRobot_MaqueenPlusV3_K10.lineTraking|block": "[CMD] 巡线 [SPEED_GRADE]档速度 [CMD2]直角转弯",
+    "DFRobot_MaqueenPlusV3_K10.getCrossState|block": "获取路口状态",
+    "DFRobot_MaqueenPlusV3_K10.getLight|block": "读取 [DIRECTION_PART] 侧光线值",
+    "DFRobot_MaqueenPlusV3_K10.readPatrol|block": "读取巡线传感器 [PATROL_NUM] 状态",
+    "DFRobot_MaqueenPlusV3_K10.readPatrolVoltage|block": "读取巡线传感器 [PATROL_NUM] ADC数据",
+    "DFRobot_MaqueenPlusV3_K10.angleControl|block": "PID角度控制 速度档位[SPEED_GRADE] 角度 [angle]° [BLOCKING]",
+    "DFRobot_MaqueenPlusV3_K10.distanceControl|block": "PID距离控制 速度档位[SPEED_GRADE] 方向 [CAR_DIRECTION] 距离 [distance] cm [BLOCKING]",
+    "DFRobot_MaqueenPlusV3_K10.getRealSpeed|block": "获取 [DIRECTION_PART] 轮实时速度cm/s",
+
+
+    "DFRobot_MaqueenPlusV3_K10.getDistanceSum|block": "读取行驶距离(cm)",
+    "DFRobot_MaqueenPlusV3_K10.clearDistanceSum|block": "重新计数行驶距离(cm)",
+
+    "DFRobot_MaqueenPlusV3_K10.DIRECTION.eLeft|menu": "左",
+    "DFRobot_MaqueenPlusV3_K10.DIRECTION.eRight|menu": "右",
+    "DFRobot_MaqueenPlusV3_K10.DIRECTION.eAll|menu": "全部",
+
+    "DFRobot_MaqueenPlusV3_K10.CAR_DIRECTION.eForward|menu": "前进",
+    "DFRobot_MaqueenPlusV3_K10.CAR_DIRECTION.eBackward|menu": "后退",
+
+    "DFRobot_MaqueenPlusV3_K10.CROSS.eStateCrossing|menu": "十字路口",
+    "DFRobot_MaqueenPlusV3_K10.CROSS.eStateLeftRight|menu": "T字路口",
+    "DFRobot_MaqueenPlusV3_K10.CROSS.eStateLeftStright|menu": "左转及直行路口",
+    "DFRobot_MaqueenPlusV3_K10.CROSS.eStateRightStright|menu": "右转及直行路口",
+
+    "DFRobot_MaqueenPlusV3_K10.CMD.eOff|menu": "关闭",
+    "DFRobot_MaqueenPlusV3_K10.CMD.eOn|menu": "开启",
+
+    "DFRobot_MaqueenPlusV3_K10.TURN_CMD.eTurnLeft|menu": "左转",
+    "DFRobot_MaqueenPlusV3_K10.TURN_CMD.eTurnRight|menu": "右转",
+    "DFRobot_MaqueenPlusV3_K10.TURN_CMD.eTurnStright|menu": "直行",
+    "DFRobot_MaqueenPlusV3_K10.TURN_CMD.eTurnStop|menu": "停止",
+
+    "DFRobot_MaqueenPlusV3_K10.DIRECTION_PART.eLeftP|menu": "左",
+    "DFRobot_MaqueenPlusV3_K10.DIRECTION_PART.eRightP|menu": "右",
+
+    "DFRobot_MaqueenPlusV3_K10.BLOCKING.eNoBlocking|menu": "允许中断",
+    "DFRobot_MaqueenPlusV3_K10.BLOCKING.eBlocking|menu": "不允许中断"
+
 }

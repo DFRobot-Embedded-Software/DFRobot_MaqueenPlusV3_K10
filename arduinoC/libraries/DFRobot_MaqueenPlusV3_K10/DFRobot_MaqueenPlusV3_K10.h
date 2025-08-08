@@ -15,54 +15,40 @@ typedef enum {
   eStateRightStright=4    /**< a T-intersection that can only turn right or go straight */ 
 }eCross_t;
 
-/**
- * @enum eRgbSelect_t
- * @brief Right and Left and All
- */
+typedef  enum {
+  eNoBlocking = 0,    /**< no blocking */ 
+  eBlocking = 1,     /**< blocking */ 
+}eBlocking_t;
+
+
+
 typedef enum {
-  eRgbLeft = 0,     /**< LEFT */ 
-  eRgbRight = 1,    /**< RIGHT */ 
-  eRgbAll = 2,      /**< ALL */ 
-}eRgbSelect_t;
+  eLeftP = 0,     /**< LEFT */ 
+  eRightP = 1,    /**< RIGHT */ 
+}eDirectionPart_t;
 
-/**
- * @enum eMotorSelect_t
- * @brief Right and Left and All
- */
 typedef enum {
-  eMotorLeft = 0,     /**< LEFT */ 
-  eMotorRight = 1,    /**< RIGHT */ 
-  eMotorAll = 2,      /**< ALL */ 
-}eMotorSelect_t;
-
+  eLeft = 0,     /**< LEFT */ 
+  eRight = 1,    /**< RIGHT */ 
+  eAll= 2,      /**< ALL */
+}eDirection_t;
 
 /**
- * @enum eMotorTurn_t
+ * @enum eCmd_t
  * @brief turn on or turn off
  */
 typedef enum {
-  eMotorOn = 1,     /**< ON */ 
-  eMotoroff = 0,    /**< OFF */ 
-}eMotorTurn_t;
+  eOff = 0,    /**< OFF */ 
+  eOn = 1,     /**< ON */ 
+}eCmd_t;
 
 /**
- * @enum eTrakingTurn_t
- * @brief turn on or turn off
+ * @enum eServoNum_t
  */
 typedef enum {
-  eTrakingOn = 1,     /**< ON */ 
-  eTrakingOff = 0,    /**< OFF */ 
-}eTrakingTurn_t;
-
-/**
- * @enum eLightSelect_t
- * @brief Right and Left
- */
-typedef enum {
-  eLightLeft = 0,     /**< LEFT */ 
-  eLightRight = 1,    /**< RIGHT */ 
-}eLightSelect_t;
-
+  eServo0 = 0,    /**< servo0 */ 
+  eServo1 = 1,     /**< servo1 */ 
+}eServoNum_t;
 
 
 /**
@@ -70,21 +56,25 @@ typedef enum {
  * @brief select partrol sensor
  */
 typedef enum {
-  eL2 = 0,    /**< L2 */ 
-  eL1 = 1,    /**< L1 */ 
-  eM = 2,     /**< M */ 
+  eL3 = 0,    /**< L3 */ 
+  eL2 = 1,    /**< L2 */ 
+  eL1 = 2,     /**<L1*/ 
   eR1 = 3,    /**< R1 */ 
   eR2 = 4,    /**< R2 */ 
+  eR3 = 5,    /**< R3 */ 
 }ePatrolNum_t;
 
 /**
- * @enum eDirection_t  
+ * @enum eSpeedGrade_t  
  * @brief FORWARD or REVERSE
  */
 typedef enum {
-  eMotorForward = 0,    /**< FORWARD */ 
-  eMotorReverse =1,     /**< REVERSE */ 
-}eDirection_t;
+  eSpeedGrade1 =1,    
+  eSpeedGrade2 =2,
+  eSpeedGrade3 =3,
+  eSpeedGrade4 =4,
+  eSpeedGrade5 =5    
+}eSpeedGrade_t;
 
 
 /**
@@ -113,15 +103,22 @@ typedef enum {
   eTurnStop =4           /**< stop */  
 }eTurnCmd_t;
 
-/**
- * @enum eBatteryType_t
- * @brief type of battery
- */
 typedef enum {
-  eLithium  =   0 ,        //Lithium ion battery
-  eAlkaline =   1        //Alkaline battery
-}eBatteryType_t;
+  eModeEmpty = 0,        
+  eModeDirectly = 1,
+  eModeTracking = 2,
+  eModeAccurately = 3,
+}eCarMode_t;
 
+typedef enum {
+  eClockwise = 0,  //顺时针
+  eAnticlockwise = 1, //逆时针
+}eAngleDirection_t;
+
+typedef enum {
+  eForward = 0,  //前进
+  eBackward = 1, //后退
+}eCarDirection_t;
 
 class DFRobot_MaqueenPlusV3_K10
 {
@@ -158,8 +155,8 @@ public:
   #define         RGB_L                       11
   #define         RGB_R                       12
 
-  #define         SERVO_1                     20
-  #define         SERVO_2                     21
+  #define         SERVO_0                     20
+  #define         SERVO_1                     21
 
   #define         BLACK_ADC_STATE             29
   #define         ADC_COLLECT_0               30
@@ -178,16 +175,16 @@ public:
   #define CAR_MODE               60          // 小车工作模式
   #define CAR_STATE              61          // 小车运行状态
   #define MOTOR_TYPE             62          // 电机类型（用于适配不同电机参数）
-  #define SPEED_MODE             63          // 速度模式 1（低）-5（高）
+  #define SPEED_GRADE             63          // 速度模式 1（低）-5（高）
 
   // 距离控制（如直线行走固定距离）
-  #define DISTANCE_CONTROL       64          // 距离控制使能（0=禁用，1=启用）
+  #define DISTANCE_CONTROL       64          // 距离控制方向 1：前进 2：后退
   #define DISTANCE_DATA_H        65          // 目标距离高8位（单位：cm，16位数据）
   #define DISTANCE_DATA_L        66          // 目标距离低8位
 
   // 角度控制（如旋转固定角度）
-  #define ANGLE_CONTROL          67          // 角度控制使能（0=禁用，1=启用）
-  #define ANGLE_DATA             68          // 目标角度（单位：度，0-360）
+  #define ANGLE_CONTROL          67          // 角度控制方向 1：顺时针 2：逆时针
+  #define ANGLE_DATA             68          // 目标角度（单位：度，0-180）
 
   //
   #define CROSS_DEFAULT          69
@@ -217,6 +214,9 @@ public:
   #define PID_CONTROL_FINISH     87       // 精确控制是否完成
   #define RIGHT_ANGLE_CONTROL    88          // 循迹时的直角优化
 
+  #define DISTANCE_SUM_H       90     // 运动累计距离（高八位）	0-255
+  #define DISTANCE_SUM_L       91     // 运动累计距离（低八位）	0-255
+
   /**
    * @fn begin
    * @brief subclass initialization function
@@ -225,31 +225,48 @@ public:
    */
   int begin(void);
   /**
-   * @fn servoMotorCtrl
-   * @brief Ctrl the servo motor
-   * @param servoMotorPin  pin of servo motor
-   * @n Optional pin：D3 D6 D9 D10
-   * @param angle  0 to 180
-   * @return None
+   * @fn setMotor
+   * @brief Setting motor parameters 
+   * @param motor  Left motor: eMotorLeft, Right motor: eMotorRight All:eMotorAll
+   * @param Dir  Forward turning: eMotorForward backward turning:eMotorReverse
+   * @param speed  0-255
+   * @return 
    */
-  void servoMotorCtrl(uint8_t servoMotorPin,uint8_t angle);
+  void setMotor(eDirection_t motor,eCarDirection_t Dir,uint8_t speed);
 
   /**
-   * @fn rgbSet
+   * @fn setMotorStop
+   * @brief Stop the motor
+   * @param motor  Left motor: eMotorLeft, Right motor: eMotorRight All:eMotorAll
+   * @return None
+   */
+  void setMotorStop(eDirection_t motor);
+
+  /**
+   * @fn setRgb
    * @brief Set color of the rgb
    * @param rgb  eRgbLeft or eRgbRight or eRgbAll
    * @param cmd  color:eRgbCmd_t
-   * @n RGB_R  
-   * @n RGB_G 
-   * @n RGB_B  
-   * @n RGB_RB 
-   * @n RGB_RG 
-   * @n RGB_GB 
-   * @n RGB_RGB
-   * @n RGB_OFF
    * @return None
    */
-  void rgbSet(eRgbSelect_t rgb,eRgbCmd_t cmd);
+  void setRgb(eDirection_t rgb,eRgbCmd_t cmd);
+
+  /**
+   * @fn setRgbOff
+   * @brief Turn off the rgb
+   * @param rgb  eRgbLeft or eRgbRight or eRgbAll
+   * @return None
+   */
+  void setRgbOff(eDirection_t rgb);
+
+  /**
+   * @fn servoMotorCtrl
+   * @brief Ctrl the servo motor
+   * @param servoNum  servo motor num: one of eServoNum_t
+   * @param angle  0 to 180
+   * @return None
+   */
+  void servoMotorCtrl(eServoNum_t servoNum ,uint8_t angle);
   /**
    * @fn readPatrol
    * @brief Read the status of the Line patrol sensor
@@ -265,31 +282,64 @@ public:
    */
   uint16_t readPatrolVoltage(ePatrolNum_t num);
   /**
-   * @fn getLight
-   * @brief Acquisition of light intensity
-   * @param cmd  light sensor:  eLightLeft or eLightRight
-   * @return light data :0-1023
-   */
-  uint16_t getLight(eLightSelect_t cmd);
-  /**
    * @fn getVersion
    * @brief Get the Version of Cosmo.
    * @return version
    */
   String getVersion(void);
   /**
+   * @fn getLight
+   * @brief Acquisition of light intensity
+   * @param cmd  light sensor:  eLightLeft or eLightRight
+   * @return light data :0-1023
+   */
+  uint16_t getLight(eDirectionPart_t cmd);
+  /**
    * @fn lineTraking
    * @brief  Stop line patrol or Start line patrol
    * @param cmd  Stop line patrol: eTrakingOff  Start line patrol: eTrakingOn
+   * @param speed  Speed of line patrol: eSpeedGrade_t
+   * @param cmd2  Right angle control: eCmd_t
    * @return 
    */
-  void lineTraking(eTrakingTurn_t cmd);
+  void lineTraking(eCmd_t cmd,eSpeedGrade_t speed,eCmd_t cmd2);
+
   /**
-   * @fn BLEModule
-   * @brief Enable or disable the Bluetooth module
-   * @n 0:disable 1:enable
+   * @fn angleControl
+   * @brief Control the car to rotate a certain angle
+   * @param cmd  eClockwise or eAnticlockwise
+   * @param speed_grade  Speed of line patrol: eSpeedGrade_t
+   * @param angle  Angle to rotate: 0-360
+   * @param blocking  eNoBlocking or eBlocking
+   * @return 
    */
-  uint8_t getCross(void);
+  void angleControl(eAngleDirection_t cmd,eSpeedGrade_t speed_grade,uint16_t angle,eBlocking_t blocking);
+
+  /**
+   * @fn distanceControl
+   * @brief Control the car to move a certain distance
+   * @param cmd  eClockwise or eAnticlockwise
+   * @param speed_grade  Speed of line patrol: eSpeedGrade_t
+   * @param distance  Distance to move: 0-65535
+   * @param blocking  eNoBlocking or eBlocking
+
+   * @return 
+  */
+  void distanceControl(eCarDirection_t cmd,eSpeedGrade_t speed_grade,uint16_t distance,eBlocking_t blocking);
+  /**
+   * @fn getRealSpeed
+   * @brief Get the real speed of the car
+   * @return real speed of the car
+   */
+  uint8_t getRealSpeed(eDirectionPart_t motor);
+  
+
+  /**
+   * @fn getCrossState
+   * @brief Get the type of Cross road
+   * @return  type of Cross road: eStateCrossing ,eStateLeftRight ,eStateLeftStright ,eStateRightStright
+   */
+  uint8_t getCrossState(void);
   /**
    * @fn setCross
    * @brief Setting the action for this intersectiond
@@ -299,28 +349,44 @@ public:
    * @return 
    */
   void setCross(eCross_t crossId,eTurnCmd_t cmd);
-  /**
-   * @fn motorSet
-   * @brief Setting motor parameters 
-   * @param motor  Left motor: eMotorLeft, Right motor: eMotorRight All:eMotorAll
-   * @param Dir  Forward turning: eMotorForward backward turning:eMotorReverse
-   * @param speed  0-255
-   * @return 
-   */
-  void motorSet(eMotorSelect_t motor,eDirection_t Dir,uint8_t speed);
-  /**
-   * @fn motorStop
-   * @brief Stop motor operation
-   * @param motor  Left motor: eMotorLeft, Right motor: eMotorRight All:eMotorAll
-   * @return 
-   */
-  void motorStop(eMotorSelect_t motor);
-  /**
+   /**
    * @fn motorTypeSet
-   * @brief Set the type of motor 
+   * @brief Setting the motor type
+   * @param type  type  
+   * @n 0(266rmp) 
    * @return 
    */
   void motorTypeSet(uint8_t type);
+
+  /**
+   * @fn setRightAngleControl
+   * @brief Set right-angle control
+   * @param cmd  cmd  
+   * @n 0(off) 
+   * @n 1(on) 
+   * @return 
+   */
+  void setRightAngleControl(eCmd_t cmd);
+  /**
+   * @fn getDistanceSum
+   * @brief Get the distance sum
+   * @return distance sum (uint16_t)cm
+   */
+  uint16_t getDistanceSum(void);
+
+  /**
+   * @fn clearDistanceSum
+   * @brief Clear the distance sum
+   * @return None
+   */
+  void clearDistanceSum(void);
+
+  /**
+   * @fn getPIDFinish
+   * @brief Get the PID finish
+   * @return PID finish (uint8_t)
+   */
+  uint8_t getPIDFinish(void);
 
   DFRobot_MaqueenPlusV3_K10();
   // ~DFRobot_MaqueenPlusV3_K10();
