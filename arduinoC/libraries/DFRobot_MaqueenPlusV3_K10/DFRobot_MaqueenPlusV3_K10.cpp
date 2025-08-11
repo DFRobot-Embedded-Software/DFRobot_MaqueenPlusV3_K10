@@ -19,16 +19,20 @@ DFRobot_MaqueenPlusV3_K10::DFRobot_MaqueenPlusV3_K10()
 int DFRobot_MaqueenPlusV3_K10::begin(void)
 {
   Serial.begin(9600);
-  Serial.println("begin \r\n");
   Wire.begin();
   // Wire.begin(K10_SDA_PIN,K10_SCL_PIN,100000);
   Wire.beginTransmission(SLAVE_ADDR);
   while(Wire.endTransmission() != 0) {
     Serial.println("i2c connect error");
-    delay(100);
+    delay(50);
+  }
+  I2CWirte(SYSINIT ,0x01);//reset maqueen
+  delay(200);//wait for reset
+  Wire.begin();
+  while(Wire.endTransmission() != 0) {
+    Serial.println("i2c connect error");
+    delay(50);
   } 
-  // I2CWirte(MY_SYS_INIT ,0x01);//Reset
-  Serial.println("end \r\n");
   return 1;
 }
 
