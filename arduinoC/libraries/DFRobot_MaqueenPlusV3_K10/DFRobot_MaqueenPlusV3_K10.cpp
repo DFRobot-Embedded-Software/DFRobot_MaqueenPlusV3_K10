@@ -29,6 +29,7 @@ int DFRobot_MaqueenPlusV3_K10::begin(void)
   I2CWirte(SYSINIT ,0x01);//reset maqueen
   delay(200);//wait for reset
   Wire.begin();
+  Wire.beginTransmission(SLAVE_ADDR);
   while(Wire.endTransmission() != 0) {
     Serial.println("i2c connect error");
     delay(50);

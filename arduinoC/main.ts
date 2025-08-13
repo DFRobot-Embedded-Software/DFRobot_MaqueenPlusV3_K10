@@ -226,7 +226,7 @@ namespace DFRobot_MaqueenPlusV3_K10 {
     //% block="line tracking [CMD] speed grade [SPEED_GRADE] right angle control [CMD2]" blockType="command"
 
     //% CMD.shadow="dropdown" CMD.options="CMD" CMD.defl="CMD.eOn"
-    //% SPEED_GRADE.shadow="dropdown" SPEED_GRADE.options="SPEED_GRADE" SPEED_GRADE.defl="SPEED_GRADE.eSpeedGrade3"
+    //% SPEED_GRADE.shadow="dropdown" SPEED_GRADE.options="SPEED_GRADE" SPEED_GRADE.defl="SPEED_GRADE.eSpeedGrade1"
     //% CMD2.shadow="dropdown" CMD2.options="CMD" CMD2.defl="CMD.eOff"
     export function lineTraking(parameter: any, block: any) {
         let cmd = parameter.CMD.code;
@@ -254,21 +254,21 @@ namespace DFRobot_MaqueenPlusV3_K10 {
     }
 
     //% block="read patrol sensor [PATROL_NUM]" blockType="reporter"
-    //% PATROL_NUM.shadow="dropdown" PATROL_NUM.options="PATROL_NUM" PATROL_NUM.defl="PATROL_NUM.eL1"
+    //% PATROL_NUM.shadow="dropdown" PATROL_NUM.options="PATROL_NUM" PATROL_NUM.defl="PATROL_NUM.eL3"
     export function readPatrol(parameter: any, block: any) {
         let patrolNum = parameter.PATROL_NUM.code;
         Generator.addCode(`maqueen.readPatrol(${patrolNum})`);
     }
 
     //% block="read patrol voltage [PATROL_NUM]" blockType="reporter"
-    //% PATROL_NUM.shadow="dropdown" PATROL_NUM.options="PATROL_NUM" PATROL_NUM.defl="PATROL_NUM.eL1"
+    //% PATROL_NUM.shadow="dropdown" PATROL_NUM.options="PATROL_NUM" PATROL_NUM.defl="PATROL_NUM.eL3"
     export function readPatrolVoltage(parameter: any, block: any) {
         let patrolNum = parameter.PATROL_NUM.code;
         Generator.addCode(`maqueen.readPatrolVoltage(${patrolNum})`);
     }
 
     //% block="angle control speed grade [SPEED_GRADE] angle [angle] blocking [BLOCKING]" blockType="command"
-    //% SPEED_GRADE.shadow="dropdown" SPEED_GRADE.options="SPEED_GRADE" SPEED_GRADE.defl="SPEED_GRADE.eSpeedGrade3"
+    //% SPEED_GRADE.shadow="dropdown" SPEED_GRADE.options="SPEED_GRADE" SPEED_GRADE.defl="SPEED_GRADE.eSpeedGrade1"
     //% angle.shadow="range" angle.params.min=-180 angle.params.max=180 angle.defl=0
     //% BLOCKING.shadow="dropdown" BLOCKING.options="BLOCKING" BLOCKING.defl="BLOCKING.eNoBlocking"
     export function angleControl(parameter: any, block: any) {
@@ -278,13 +278,14 @@ namespace DFRobot_MaqueenPlusV3_K10 {
         if( angle >= 0) {
             Generator.addCode(`maqueen.angleControl(eClockwise, ${speedGrade}, ${angle}, ${blocking});`);
         } else {
+            angle = -angle;
             Generator.addCode(`maqueen.angleControl(eAnticlockwise, ${speedGrade}, ${angle}, ${blocking});`);
         }
     }
 
     //% block="distance control [CAR_DIRECTION] speed grade [SPEED_GRADE] distance [distance] blocking [BLOCKING]" blockType="command"
     //% CAR_DIRECTION.shadow="dropdown" CAR_DIRECTION.options="CAR_DIRECTION" CAR_DIRECTION.defl="CAR_DIRECTION.eForward"
-    //% SPEED_GRADE.shadow="dropdown" SPEED_GRADE.options="SPEED_GRADE" SPEED_GRADE.defl="SPEED_GRADE.eSpeedGrade3"
+    //% SPEED_GRADE.shadow="dropdown" SPEED_GRADE.options="SPEED_GRADE" SPEED_GRADE.defl="SPEED_GRADE.eSpeedGrade1"
     //% distance.shadow="range" distance.params.min=0 distance.params.max=65535 distance.defl=0
     //% BLOCKING.shadow="dropdown" BLOCKING.options="BLOCKING" BLOCKING.defl="BLOCKING.eNoBlocking"
     export function distanceControl(parameter: any, block: any) {
