@@ -19,7 +19,7 @@
 
 
     "DFRobot_MaqueenPlusV3_K10.getDistanceSum|block": "读取行驶距离(cm)",
-    "DFRobot_MaqueenPlusV3_K10.clearDistanceSum|block": "重新计数行驶距离(cm)",
+    "DFRobot_MaqueenPlusV3_K10.clearDistanceSum|block": "重置行驶距离",
 
     "DFRobot_MaqueenPlusV3_K10.DIRECTION.eLeft|menu": "左",
     "DFRobot_MaqueenPlusV3_K10.DIRECTION.eRight|menu": "右",
