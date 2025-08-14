@@ -42,6 +42,16 @@ typedef enum {
   eOn = 1,     /**< ON */ 
 }eCmd_t;
 
+
+/**
+ * @enum ePIDCmd_t
+ * @brief suspend  or continue
+ */
+typedef enum {
+  eSuspend = 0,    /**< suspend */ 
+  eContinue = 1,     /**< continue */ 
+}ePIDCmd_t;
+
 /**
  * @enum eServoNum_t
  */
@@ -111,13 +121,13 @@ typedef enum {
 }eCarMode_t;
 
 typedef enum {
-  eClockwise = 0,  //顺时针
-  eAnticlockwise = 1, //逆时针
+  eClockwise = 0,  
+  eAnticlockwise = 1, 
 }eAngleDirection_t;
 
 typedef enum {
-  eForward = 0,  //前进
-  eBackward = 1, //后退
+  eForward = 0,  
+  eBackward = 1, 
 }eCarDirection_t;
 
 class DFRobot_MaqueenPlusV3_K10
@@ -170,52 +180,54 @@ public:
   #define         VERSON_LEN                  50
   #define         VERSON_DATA                 51
 
-  /* ------------------------------ 运动控制相关寄存器 ------------------------------ */
-  // 小车模式与状态
-  #define CAR_MODE               60          // 小车工作模式
-  #define CAR_STATE              61          // 小车运行状态
-  #define MOTOR_TYPE             62          // 电机类型（用于适配不同电机参数）
-  #define SPEED_GRADE             63          // 速度模式 1（低）-5（高）
+/* ------------------------------ Motion control related related registers related registers ------------------------------ */
+// Car mode and status
+  #define CAR_MODE      60 // Car working mode
+  #define CAR_STATE     61 // Car running status
+  #define MOTOR_TYPE    62 // Motor type (used to adapt to different motor parameters)
+  #define SPEED_GRADE   63 // Speed mode 1 (low) -5 (high)
 
-  // 距离控制（如直线行走固定距离）
-  #define DISTANCE_CONTROL       64          // 距离控制方向 1：前进 2：后退
-  #define DISTANCE_DATA_H        65          // 目标距离高8位（单位：cm，16位数据）
-  #define DISTANCE_DATA_L        66          // 目标距离低8位
+// Distance control (e.g., walking a fixed distance in a straight line)
+  #define DISTANCE_CONTROL  64 // Distance control direction 0: forward 1: backward
+  #define DISTANCE_DATA_H   65 // Target distance high 8 bits (unit: cm, 16-bit data)
+  #define DISTANCE_DATA_L   66 // Target distance low 8 bits
 
-  // 角度控制（如旋转固定角度）
-  #define ANGLE_CONTROL          67          // 角度控制方向 1：顺时针 2：逆时针
-  #define ANGLE_DATA             68          // 目标角度（单位：度，0-180）
+// Angle control (e.g., rotating a fixed angle)
+  #define ANGLE_CONTROL     67 // Angle control direction 0: clockwise 1: counterclockwise
+  #define ANGLE_DATA        68 // Target angle (unit: degree, 0-180)
 
-  //
-  #define CROSS_DEFAULT          69
-  #define T1_DEFAULT             70
-  #define T2_DEFAULT             71
-  #define T3_DEFAULT             72
+//
+  #define CROSS_DEFAULT    69
+  #define T1_DEFAULT       70
+  #define T2_DEFAULT       71
+  #define T3_DEFAULT       72
 
-  // 系统初始化
-  #define SYSINIT                73          // 系统状态重置（写入1触发重置，清除所有状态）
+// System initialization
+  #define SYSINIT         73 // System state reset (write 1 to trigger reset, clear all states)
+
+/* ------------------------------ Encoder and light intensity related registers ------------------------------ */
+// Encoder speed (unit: CM/S)
+  #define SPEED_DATAL     76 // Left wheel speed value
+  #define SPEED_DATAR     77 // Right wheel speed value
+
+// Light intensity sensor data (16-bit)
+  #define LIGHTL_H      78 // Left light intensity sensor high 8 bits
+  #define LIGHTL_L      79 // Left light intensity sensor low 8 bits
+  #define LIGHTR_H      80 // Right light intensity sensor high 8 bits
+  #define LIGHTR_L      81 // Right light intensity sensor low 8 bits
+
+/* ------------------------------ Supplementary control registers ------------------------------ */
+  #define DISTANCE_SPEED      85 // Speed during distance control (used to adjust walking speed)
+  #define ANGLE_SPEED         86 // Speed during angle control (used to adjust rotation speed)
+  #define PID_CONTROL_FINISH  87 // Whether precise control is completed
+
+  #define DISTANCE_SUM_H    90 // Cumulative movement distance (high eight bits) 0-255
+  #define DISTANCE_SUM_L    91 // Cumulative movement distance (low eight bits) 0-255
 
 
-  /* ------------------------------ 编码器与光强相关寄存器 ------------------------------ */
-  // 编码器速度（单位：CM/S）
-  #define SPEED_DATAL            76          // 左轮速度值
-  #define SPEED_DATAR            77          // 右轮速度值
-
-  // 光强传感器数据（16位）
-  #define LIGHTL_H               78          // 左光强传感器高8位
-  #define LIGHTL_L               79          // 左光强传感器低8位
-  #define LIGHTR_H               80          // 右光强传感器高8位
-  #define LIGHTR_L               81          // 右光强传感器低8位
 
 
-  /* ------------------------------ 补充控制寄存器 ------------------------------ */
-  #define DISTANCE_SPEED         85          // 距离控制时的速度（用于调整行走速度）
-  #define ANGLE_SPEED            86          // 角度控制时的速度（用于调整旋转速度）
-  #define PID_CONTROL_FINISH     87       // 精确控制是否完成
-  #define RIGHT_ANGLE_CONTROL    88          // 循迹时的直角优化
 
-  #define DISTANCE_SUM_H       90     // 运动累计距离（高八位）	0-255
-  #define DISTANCE_SUM_L       91     // 运动累计距离（低八位）	0-255
 
   /**
    * @fn begin
@@ -299,10 +311,9 @@ public:
    * @brief  Stop line patrol or Start line patrol
    * @param cmd  Stop line patrol: eTrakingOff  Start line patrol: eTrakingOn
    * @param speed  Speed of line patrol: eSpeedGrade_t
-   * @param cmd2  Right angle control: eCmd_t
    * @return 
    */
-  void lineTraking(eCmd_t cmd,eSpeedGrade_t speed,eCmd_t cmd2);
+  void lineTraking(eCmd_t cmd,eSpeedGrade_t speed);
 
   /**
    * @fn angleControl
@@ -358,15 +369,6 @@ public:
    */
   void motorTypeSet(uint8_t type);
 
-  /**
-   * @fn setRightAngleControl
-   * @brief Set right-angle control
-   * @param cmd  cmd  
-   * @n 0(off) 
-   * @n 1(on) 
-   * @return 
-   */
-  void setRightAngleControl(eCmd_t cmd);
   /**
    * @fn getDistanceSum
    * @brief Get the distance sum

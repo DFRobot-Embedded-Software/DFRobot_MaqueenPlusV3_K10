@@ -13,6 +13,14 @@ enum DIRECTION_PART  {
     eRightP,
 }
 
+
+enum PIDCmd {
+    //% block="Suspend"
+    eSuspend ,   
+    //% block="Continue"
+    eContinue ,   
+};
+
 enum DIRECTION  {
     //% block="Left"
     eLeft,
@@ -138,7 +146,7 @@ enum ANGLE_DIRECTION {
 }
 
 
-//% color="#56ca9e" iconWidth=50 iconHeight=40
+//% color="#48ce9b" iconWidth=50 iconHeight=40
 namespace DFRobot_MaqueenPlusV3_K10 {
     //% block="MaqueenPlus_V3_K10_Init" blockType="command"
     export function DFRobot_MaqueenPlusV3_K10_init() {
@@ -223,17 +231,13 @@ namespace DFRobot_MaqueenPlusV3_K10 {
         Generator.addCode(`maqueen.setCross(${cross}, ${turnCmd});`);
     }
 
-    //% block="line tracking [CMD] speed grade [SPEED_GRADE] right angle control [CMD2]" blockType="command"
-
+    //% block="line tracking [CMD] speed grade [SPEED_GRADE]" blockType="command"
     //% CMD.shadow="dropdown" CMD.options="CMD" CMD.defl="CMD.eOn"
     //% SPEED_GRADE.shadow="dropdown" SPEED_GRADE.options="SPEED_GRADE" SPEED_GRADE.defl="SPEED_GRADE.eSpeedGrade1"
-    //% CMD2.shadow="dropdown" CMD2.options="CMD" CMD2.defl="CMD.eOff"
     export function lineTraking(parameter: any, block: any) {
         let cmd = parameter.CMD.code;
         let speed = parameter.SPEED_GRADE.code;
-        let cmd2 = parameter.CMD2.code;
-        Generator.addCode(`maqueen.lineTraking(${cmd}, ${speed}, ${cmd2});`);
-
+        Generator.addCode(`maqueen.lineTraking(${cmd}, ${speed});`);
     }
 
     //% block="get cross state" blockType="reporter"
@@ -307,9 +311,12 @@ namespace DFRobot_MaqueenPlusV3_K10 {
     export function getDistanceSum(parameter: any, block: any) {
         Generator.addCode(`maqueen.getDistanceSum()`);
     }
-    //% block="clear total distance" blockType="command"
-    export function clearDistanceSum() {
-        Generator.addCode(`maqueen.clearDistanceSum();`);
+
+    //% block="PID Control [PIDCmd]" blockType="command"
+    //% PIDCmd.shadow="dropdown" PIDCmd.options="PIDCmd" PIDCmd.defl="PIDCmd.eSuspend"
+    export function PIDControl(parameter: any, block: any) {
+        let cmd = parameter.PIDCmd.code;
+        Generator.addCode(`maqueen.PIDControl(${cmd});`);
     }
 
 }

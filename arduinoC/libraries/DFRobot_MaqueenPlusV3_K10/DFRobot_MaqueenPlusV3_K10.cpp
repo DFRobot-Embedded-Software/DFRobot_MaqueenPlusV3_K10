@@ -91,15 +91,13 @@ void DFRobot_MaqueenPlusV3_K10::setCross(eCross_t crossId,eTurnCmd_t cmd)
   }
 }
 
-void DFRobot_MaqueenPlusV3_K10::lineTraking(eCmd_t cmd,eSpeedGrade_t speed,eCmd_t cmd2)
+void DFRobot_MaqueenPlusV3_K10::lineTraking(eCmd_t cmd,eSpeedGrade_t speed)
 {
   if(cmd==eOn){/*Star*/
     I2CWirte(CAR_MODE ,eModeTracking);
     I2CWirte(SPEED_GRADE ,speed);
-    I2CWirte(RIGHT_ANGLE_CONTROL,cmd2);
   }else if(cmd==eOff){/*Stop*/
     I2CWirte(CAR_MODE ,eModeEmpty);
-    I2CWirte(RIGHT_ANGLE_CONTROL,cmd2);
   }
 }
 
@@ -272,14 +270,19 @@ uint8_t DFRobot_MaqueenPlusV3_K10::getRealSpeed(eDirectionPart_t motor)
   }
   return 0;
 }
-void DFRobot_MaqueenPlusV3_K10::setRightAngleControl(eCmd_t cmd)
-{
-  I2CWirte(RIGHT_ANGLE_CONTROL ,cmd);
-}
 
 uint8_t DFRobot_MaqueenPlusV3_K10::getPIDFinish(void)
 {
   I2CRead(PID_CONTROL_FINISH ,&rxbuf[PID_CONTROL_FINISH] ,1);
   delay(5);
   return rxbuf[PID_CONTROL_FINISH];
+}
+
+void DFRobot_MaqueenPlusV3_K10::PIDControl(ePIDCmd_t cmd)
+{
+  if(cmd==eSuspend){
+    I2CWirte(CAR_MODE ,eModeEmpty);
+  }else if(cmd==eContinue){
+    I2CWirte(CAR_MODE ,eModeAccurately);
+  }
 }

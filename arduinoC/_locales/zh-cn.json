@@ -7,14 +7,15 @@
     "DFRobot_MaqueenPlusV3_K10.setRgbOff|block": "设置[DIRECTION]RGB车灯  关闭",
     "DFRobot_MaqueenPlusV3_K10.servoMotorCtrl|block": "设置舵机 [SERVO_NUM] 角度为 [angle]",
     "DFRobot_MaqueenPlusV3_K10.setCross|block": "设置前方 [CROSS]  [TURN_CMD]",
-    "DFRobot_MaqueenPlusV3_K10.lineTraking|block": "[CMD] 巡线 [SPEED_GRADE]档速度 [CMD2]直角转弯",
-    "DFRobot_MaqueenPlusV3_K10.getCrossState|block": "获取路口状态",
+    "DFRobot_MaqueenPlusV3_K10.lineTraking|block": "[CMD] 巡线 [SPEED_GRADE]档速度 ",
+    "DFRobot_MaqueenPlusV3_K10.getCrossState|block": "获取路口状态(1: ┼ 2: ┬ 3: ┤ 4: ├)",
     "DFRobot_MaqueenPlusV3_K10.getLight|block": "读取 [DIRECTION_PART] 侧光线值",
     "DFRobot_MaqueenPlusV3_K10.readPatrol|block": "读取巡线传感器 [PATROL_NUM] 状态",
     "DFRobot_MaqueenPlusV3_K10.readPatrolVoltage|block": "读取巡线传感器 [PATROL_NUM] ADC数据",
     "DFRobot_MaqueenPlusV3_K10.angleControl|block": "PID角度控制 速度档位[SPEED_GRADE] 角度 [angle]° [BLOCKING]",
     "DFRobot_MaqueenPlusV3_K10.distanceControl|block": "PID距离控制 速度档位[SPEED_GRADE] 方向 [CAR_DIRECTION] 距离 [distance] cm [BLOCKING]",
     "DFRobot_MaqueenPlusV3_K10.getRealSpeed|block": "获取 [DIRECTION_PART] 轮实时速度cm/s",
+    "DFRobot_MaqueenPlusV3_K10.PIDControl|block": "PID控制 [PIDCmd]",
 
 
     "DFRobot_MaqueenPlusV3_K10.getDistanceSum|block": "读取行驶距离(cm)",
@@ -44,6 +45,9 @@
     "DFRobot_MaqueenPlusV3_K10.DIRECTION_PART.eRightP|menu": "右",
 
     "DFRobot_MaqueenPlusV3_K10.BLOCKING.eNoBlocking|menu": "允许中断",
-    "DFRobot_MaqueenPlusV3_K10.BLOCKING.eBlocking|menu": "不允许中断"
+    "DFRobot_MaqueenPlusV3_K10.BLOCKING.eBlocking|menu": "不允许中断",
+
+    "DFRobot_MaqueenPlusV3_K10.PIDCmd.eSuspend|menu": "暂停",
+    "DFRobot_MaqueenPlusV3_K10.PIDCmd.eContinue|menu": "继续"
 
 }
