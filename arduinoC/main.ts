@@ -312,6 +312,11 @@ namespace DFRobot_MaqueenPlusV3_K10 {
         Generator.addCode(`maqueen.getDistanceSum()`);
     }
 
+    //% block="clear total distance" blockType="command"
+    export function clearDistanceSum() {
+        Generator.addCode(`maqueen.clearDistanceSum();`);
+    }
+    
     //% block="PID Control [PIDCmd]" blockType="command"
     //% PIDCmd.shadow="dropdown" PIDCmd.options="PIDCmd" PIDCmd.defl="PIDCmd.eSuspend"
     export function PIDControl(parameter: any, block: any) {
