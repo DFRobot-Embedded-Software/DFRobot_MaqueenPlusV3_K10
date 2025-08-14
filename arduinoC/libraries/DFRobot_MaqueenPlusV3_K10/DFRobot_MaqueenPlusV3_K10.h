@@ -390,6 +390,8 @@ public:
    */
   uint8_t getPIDFinish(void);
 
+  void PIDControl(ePIDCmd_t cmd);
+
   DFRobot_MaqueenPlusV3_K10();
   // ~DFRobot_MaqueenPlusV3_K10();
 
